@@ -3,7 +3,9 @@ name = "random_eviction_cache"
 authors = ["Xingzhi Andy <xingzhiyeandy@gmail.com>"]
 version = "0.1.0"
 edition = "2021"
-
+description = "A random eviction cache implementation"
+license = "MIT"
+repository = "https://github.com/XingzhiY/random_eviction_cache.git"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
