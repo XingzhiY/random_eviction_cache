@@ -1,6 +1,6 @@
 [package]
 name = "random_eviction_cache"
-authors = ["Xingzhi Andy <xye8@u.rochester.edu"]
+authors = ["Xingzhi Andy <xingzhiyeandy@gmail.com>"]
 version = "0.1.0"
 edition = "2021"
 
