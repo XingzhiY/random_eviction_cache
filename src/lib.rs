@@ -2,7 +2,6 @@ use indexmap::IndexSet;
 use rand::seq::IteratorRandom;
 use rand::thread_rng;
 use rand::Rng;
-
 pub struct RandomEvictionCache {
     set: IndexSet<i32>,
     capacity: usize,
@@ -71,6 +70,27 @@ mod tests {
     use std::os::unix::net::UnixDatagram;
 
     use super::*;
+
+    #[test]
+    fn test_basic_cyclic() {
+        let capacity = 512;
+        let mut cache = RandomEvictionCache::new(capacity);
+        let mut misses = 0;
+        let total_numbers = 1024;
+        let iterations = 100;
+
+        for _ in 0..iterations {
+            for number in 1..=total_numbers {
+                if cache.read_function(number).is_none() {
+                    misses += 1;
+                }
+            }
+        }
+
+        let total_requests = total_numbers * iterations;
+        let miss_ratio = misses as f64 / total_requests as f64;
+        println!("Miss ratio: {}", miss_ratio);
+    }
 
     #[test]
     fn test_cache_behavior1() {
