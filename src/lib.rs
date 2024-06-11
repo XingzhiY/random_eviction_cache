@@ -38,17 +38,17 @@ impl RandomEvictionCache {
 }
 
 pub fn fill_sawtooth_trace(repeat_time: usize, data_size: usize, c2: usize, data: &mut Vec<i32>) {
-    for i in 1..c2 + 1 {
+    for i in 1..=c2 {
         data.push(i as i32);
     } // 1 to 1
     for _ in 0..repeat_time {
-        for i in 1..data_size + 1 {
+        for i in 1..=data_size {
             if i <= c2 {
                 continue;
             }
             data.push(i as i32);
         } // 2 to 128
-        for i in 1..data_size + 1 {
+        for i in 1..=data_size {
             if i <= c2 {
                 continue;
             }
@@ -59,7 +59,7 @@ pub fn fill_sawtooth_trace(repeat_time: usize, data_size: usize, c2: usize, data
 
 pub fn fill_cyclic_trace(repeat_time: usize, data_size: usize, data: &mut Vec<i32>) {
     for _ in 0..repeat_time {
-        for i in 1..data_size + 1 {
+        for i in 1..=data_size {
             data.push(i as i32);
         }
     }
@@ -94,13 +94,13 @@ mod tests {
 
     #[test]
     fn test_cache_behavior1() {
-        for _ in 0..2 {
+        for _ in 0..20 {
             let ki = 1024;
             let mi = 1024 * ki;
-            let c2: usize = mi;
-            let c3 = 96 * mi;
-            let data_size = 128 * mi;
-            let repeat_time = 2;
+            let c2: usize = 1;
+            let c3 = 96;
+            let data_size = 64;
+            let repeat_time = 2000;
 
             // let mut data = vec![0; repeat_time * (data_size - c2)];
             let mut data = Vec::new();
@@ -144,5 +144,14 @@ mod tests {
         }
     }
 }
+// small scale sawtooth sim
 // [(data size, miss ratio), ...]
 // [(64, 0), (128, 0.35433072), (256, 0.7467787), (512, 0.86972326), (1024, 0.93688035)]
+
+// large scale sawtooth sim
+// [(data size, miss ratio), ...]
+// [(64mb, 0), (128mb, 0.35528725), (256mb, 0.73603165), (512mb, 0.87168735), (1024mb, 0.93592227)]
+
+// small scale cyclic sim
+// [(data size, miss ratio), ...]
+// [(64, 0), (128, 0.456), (256, 0.913), (512, 0.995), (1024, 0.9999)]
